@@ -12,18 +12,14 @@ crosses = []
 circles = []
 running = True
 turn_player_1 = True
-turn_player_2 = False
-
-def toggle_turn:
-    turn_player_1 = not turn_player_1
-    turn_player_2 = not turn_player_2
+turn_player_2 = False    
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.getpos()
+            pos = pygame.mouse.get_pos()
             # [x, y] = pos//Cell_Size
             x = pos[0]//Cell_Size
             y = pos[1]//Cell_Size
@@ -33,7 +29,8 @@ while running:
             if(turn_player_2):
                 circle = Circle(x,y)
                 circles.append(circle)
-            toggle_turn()
+            turn_player_1 = not turn_player_1
+            turn_player_2 = not turn_player_2
             
     surface.fill([255,255,255])
 
