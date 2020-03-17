@@ -1,12 +1,11 @@
 #TIC TAC TOE Environment
-from GridLines import Grid
 import pygame
-Size = 600
-N = 5
-Game_Window = [Size + 150 ,Size]
-Cell_Size = Game_Window[1]//N
+from params import Size
+from GridLines import Grid
+from Player import Cross
 surface = pygame.display.set_mode((Size+200,Size))
 pygame.display.set_caption("tic tac toe")
+
 
 grid = Grid()
 running = True
@@ -18,5 +17,7 @@ while running:
     surface.fill([255,255,255])
     
     grid.draw(surface)
+    cross=Cross(0,0)
+    cross.draw(surface)
     pygame.display.flip()
 pygame.quit()
