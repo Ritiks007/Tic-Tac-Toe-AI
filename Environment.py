@@ -12,6 +12,7 @@ class Environment:
         self.turn = 0
         self.surface = pygame.display.set_mode((Size+200,Size))
         pygame.display.set_caption("tic tac toe")
+        self.gameover = False
     
     def create_game(self):
         self.surface.fill([255,255,255])
@@ -26,9 +27,13 @@ class Environment:
                 # [x, y] = pos//Cell_Size
                 x = pos[0]//Cell_Size
                 y = pos[1]//Cell_Size
-                if(x<N and y<N and self.grid.check(x,y)):
+                if(x<N and y<N and self.grid.check(x,y) == -1):
                     self.player.move(self.turn, x, y)
-                    self.grid.update(x,y)
+                    self.grid.update(x,y,self.turn)
+                    if(self.grid.checkwin(x, y, self.turn)):
+                        print("Player {} won".format(self.turn+1))
+                        self.gameover = True
+                        self.running = False
                     print(self.grid.CheckGrid)
                     self.turn = 1 - self.turn
                     
