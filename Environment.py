@@ -23,19 +23,16 @@ while running:
             # [x, y] = pos//Cell_Size
             x = pos[0]//Cell_Size
             y = pos[1]//Cell_Size
-            if(x<N and y<N):
-	            if(turn_player_1):
-	                cross = Cross(x,y)
             if(x<N and y<N and grid.check(x,y)):
-	            if(turn_player_1):
-	            	cross = Cross(x,y)
-	                crosses.append(cross)
-	            if(turn_player_2):
-	                circle = Circle(x,y)
-	                circles.append(circle)
-            	grid.update(x,y)
-	            turn_player_1 = not turn_player_1
-	            turn_player_2 = not turn_player_2
+                if(turn_player_1):
+                    cross = Cross(x,y)
+                    crosses.append(cross)
+                if(turn_player_2):
+                    circle = Circle(x,y)
+                    circles.append(circle)
+                grid.update(x,y)
+                turn_player_1 = not turn_player_1
+                turn_player_2 = not turn_player_2
             
     surface.fill([255,255,255])
 

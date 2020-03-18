@@ -32,4 +32,4 @@ class Grid:
 		self.CheckGrid[x][y] == 0
 
 	def check(self, x, y):
-		return CheckGrid[x][y]
+		return self.CheckGrid[x][y]
