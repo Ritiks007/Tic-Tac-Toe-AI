@@ -35,52 +35,52 @@ class Grid:
 		return self.CheckGrid[x][y]
 
 	def _right(self, a, b, t):
-		if(a == N and self.Grid[a][b] != t):
+		if(a == N or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _right(a+1, b, t)
+		return 1 + self._right(a+1, b, t)
 
 	def _left(self, a, b, t):
-		if(a == 0 and self.Grid[a][b] != t):
+		if(a == 0 or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _left(a-1, b, t)
+		return 1 + self._left(a-1, b, t)
 
 	def _up(self, a, b, t):
-		if(a == 0 and self.Grid[a][b] != t):
+		if(b == 0 or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _up(a, b-1, t)
+		return 1 + self._up(a, b-1, t)
 
 	def _down(self, a, b, t):
-		if(a == N and self.Grid[a][b] != t):
+		if(b == N or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _down(a-1, b, t)
+		return 1 + self._down(a, b+1, t)
 
 	def _leftUp(self, a, b, t):
-		if(a == 0 or b == 0 and self.Grid[a][b] != t):
+		if(a == 0 or b == 0 or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _leftUp(a-1, b-1, t)
+		return 1 + self._leftUp(a-1, b-1, t)
 
 	def _rightUp(self, a, b, t):
-		if(a == N or b == 0 and self.Grid[a][b] != t):
+		if(a == N or b == 0 or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _rightUp(a+1, b-1, t)
+		return 1 + self._rightUp(a+1, b-1, t)
 
 	def _leftdown(self, a, b, t):
-		if(a == 0 or b == N and self.Grid[a][b] != t):
+		if(a == 0 or b == N or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _leftdown(a-1, b+1, t)
+		return 1 + self._leftdown(a-1, b+1, t)
 
 	def _rightDown(self, a, b, t):
-		if(a == N or b == N and self.Grid[a][b] != t):
+		if(a == N or b == N or self.CheckGrid[a][b] != t):
 			return 0
-		return 1 + _rightDown(a+1, b+1, t)
+		return 1 + self._rightDown(a+1, b+1, t)
 
-	def checkwin(self,x,y):
+	def checkwin(self,x,y,t):
 
 		win = []
-		win.append(_right + 1 + _left)
-		win.append(_leftdown + 1 + _rightUp)
-		win.append(_rightDown + 1 + _leftUp)
-		win.append(_up + 1 + _down)
+		win.append(self._right(x+1, y, t+1) + 1 + self._left(x-1, y, t+1))
+		win.append(self._leftdown(x-1, y+1, t+1) + 1 + self._rightUp(x+1, y-1, t+1))
+		win.append(self._rightDown(x+1, y+1, t+1) + 1 + self._leftUp(x-1, y-1, t+1))
+		win.append(self._up(x, y-1, t+1) + 1 + self._down(x,y+1, t+1))
 
 		if(win[0]>=4 or win[1]>=4 or win[2] >= 4 or win[3] >= 4):
 			return 1
