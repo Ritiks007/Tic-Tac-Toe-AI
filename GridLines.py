@@ -29,7 +29,7 @@ class Grid:
 			pygame.draw.line(surface, grid_color, line[0], line[1], grid_thickness)
 
 	def update(self, x, y):
-		self.CheckGrid[x][y] == 0
+		self.CheckGrid[x][y] = 0
 
 	def check(self, x, y):
 		return self.CheckGrid[x][y]
