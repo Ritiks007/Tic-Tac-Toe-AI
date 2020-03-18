@@ -1,6 +1,6 @@
 #TIC TAC TOE Environment
 import pygame
-from params import Size, Cell_Size
+from params import Size, Cell_Size, N
 from GridLines import Grid
 from Player import Cross,Circle
 surface = pygame.display.set_mode((Size+200,Size))
@@ -23,14 +23,15 @@ while running:
             # [x, y] = pos//Cell_Size
             x = pos[0]//Cell_Size
             y = pos[1]//Cell_Size
-            if(turn_player_1):
-                cross = Cross(x,y)
-                crosses.append(cross)
-            if(turn_player_2):
-                circle = Circle(x,y)
-                circles.append(circle)
-            turn_player_1 = not turn_player_1
-            turn_player_2 = not turn_player_2
+            if(x<N and y<N):
+	            if(turn_player_1):
+	                cross = Cross(x,y)
+	                crosses.append(cross)
+	            if(turn_player_2):
+	                circle = Circle(x,y)
+	                circles.append(circle)
+	            turn_player_1 = not turn_player_1
+	            turn_player_2 = not turn_player_2
             
     surface.fill([255,255,255])
 
