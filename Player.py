@@ -50,6 +50,6 @@ class Player:
         if turn == self.player_cross:
             cross = Cross(x,y)
             self.players[self.player_cross].append(cross)
-        else
+        else:
             circle = Circle(x,y)
             self.players[1-self.player_cross].append(circle)
