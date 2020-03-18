@@ -23,23 +23,17 @@ while running:
             # [x, y] = pos//Cell_Size
             x = pos[0]//Cell_Size
             y = pos[1]//Cell_Size
-<<<<<<< HEAD
             if(x<N and y<N):
 	            if(turn_player_1):
 	                cross = Cross(x,y)
-=======
             if(x<N and y<N and grid.check(x,y)):
 	            if(turn_player_1):
 	            	cross = Cross(x,y)
->>>>>>> 6682ede116c97de134e54f9c32bf6d12fe5423e6
 	                crosses.append(cross)
 	            if(turn_player_2):
 	                circle = Circle(x,y)
 	                circles.append(circle)
-<<<<<<< HEAD
-=======
             	grid.update(x,y)
->>>>>>> 6682ede116c97de134e54f9c32bf6d12fe5423e6
 	            turn_player_1 = not turn_player_1
 	            turn_player_2 = not turn_player_2
             
