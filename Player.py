@@ -40,11 +40,11 @@ class Circle:
         pygame.draw.circle(surface, self.color, self.center, self.radius, self.thickness)
 
 class Player:
-    def __init__(self, choice):
+    def __init__(self):
         self.players = []
         self.players.append([])
         self.players.append([])
-        self.player_cross = choice
+        self.player_cross = 0
 
     def move(self,turn,x,y):
         if turn == self.player_cross:
@@ -53,3 +53,9 @@ class Player:
         else:
             circle = Circle(x,y)
             self.players[1-self.player_cross].append(circle)
+
+    def draw(self,surface):
+        for c in self.players:
+            for ci in c:
+                ci.draw(surface)
+        
