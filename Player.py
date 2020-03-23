@@ -58,4 +58,10 @@ class Player:
         for c in self.players:
             for ci in c:
                 ci.draw(surface)
-        
+
+    def reset(self):
+        self.players.clear()
+        self.players.append([])
+        self.players.append([])
+        self.player_cross = 0
+

@@ -1,7 +1,7 @@
 #TIC TAC TOE Environment
 import pygame
 from params import Size, Cell_Size, N
-from GridLines import Grid
+from GridLines import Grid 
 from Player import Player
 
 class Environment:
@@ -17,7 +17,7 @@ class Environment:
     def create_game(self):
         self.surface.fill([255,255,255])
         self.grid.draw(self.surface)
-        # pygame.draw.        
+        self.display_start_menu(self.surface)
         pygame.display.flip()
 
     def update(self):
@@ -38,8 +38,14 @@ class Environment:
                         self.running = False
                     print(self.grid.CheckGrid)
                     self.turn = 1 - self.turn
-                    
+
         self.surface.fill([255,255,255])
         self.grid.draw(self.surface)
         self.player.draw(self.surface)
         pygame.display.flip()
+    def reset(self):
+        self.turn = 0
+        self.grid.reset()
+        self.player.reset()
+        self.running = True
+        self.gameover = False
