@@ -33,9 +33,13 @@ class Environment:
                 y = pos[1]//Cell_Size
                 if(x<N and y<N and self.grid.check(x,y) == -1):
                     self.player.move(self.turn, x, y)
-                    self.grid.update(x,y,self.turn)
-                    if(self.grid.checkwin(x, y, self.turn)):
+                    self.grid.update(x,y,self.turn) 
+                    result = self.grid.checkwin(x, y, self.turn) 
+                    if(result==1 or result==2):
                         print("Player {} won".format(self.turn+1))
+                        self.gameover = True
+                    elif(result==3):
+                        print("Draw")
                         self.gameover = True
                     print(self.grid.CheckGrid)
                     self.turn = 1 - self.turn
