@@ -32,18 +32,13 @@ class Environment:
                 if(x<N and y<N and self.grid.check(x,y) == -1):
                     self.player.move(self.turn, x, y)
                     self.grid.update(x,y,self.turn)
-                    if(self.grid.checkwin(x, y, self.turn)==1 or self.grid.checkwin(x, y, self.turn)==2):
+                    result=self.grid.checkwin(x,y,self.turn)
+                    if(result==1 or result==2):
                         print("Player {} won".format(self.turn+1))
                         self.gameover = True
-                        self.running = False
-                    elif((self.grid.checkwin(x,y,self.turn))==0):
-                        print("Currently Running")
-                        self.gameover=False
-                        self.running=True
-                    elif(self.grid.checkwin(x, y, self.turn)==3):
+                    elif(result==3):
                         print("Draw")
                         self.gameover=True
-                        self.running=False
                     print(self.grid.CheckGrid)
                     self.turn = 1 - self.turn
 
