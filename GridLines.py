@@ -1,14 +1,11 @@
 import pygame
-from params import Cell_Size,N,Size,grid_color,grid_thickness
+from params import Cell_Size,N,Size,grid_color,grid_thickness,font
 
-font = pygame.font.SysFont('comicsans', 30, True)
 class Grid:
-
 	def __init__(self):
 
 		rows, cols = (N, N) 
 		self.CheckGrid = [[-1 for i in range(cols)] for j in range(rows)]
-
 		self.gridlines = [((Size, 0),(Size, Size))] # side bar
 
 		# vertical lines
@@ -28,8 +25,8 @@ class Grid:
 	def draw(self, surface):
 		for line in self.gridlines:
 			pygame.draw.line(surface, grid_color, line[0], line[1], grid_thickness)
-			menu = font.render('MENU', 1, (0,0,0))
-			surface.blit(menu, Cell_Size*(N-0.5), 20)
+			menu = font.render('MENU', 1, (255,0,0))
+			surface.blit(menu, (Cell_Size*(N+0.5), 20))
 
 	def update(self, x, y, t):
 		self.CheckGrid[x][y] = t+1
@@ -89,4 +86,4 @@ class Grid:
 			return 1
 		return 0
 	def reset(self):
-		self.CheckGrid = [[-1 for i in range(cols)] for j in range(rows)]
+		self.CheckGrid = [[-1 for i in range(N)] for j in range(N)]

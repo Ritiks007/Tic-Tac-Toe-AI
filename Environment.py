@@ -17,13 +17,15 @@ class Environment:
     def create_game(self):
         self.surface.fill([255,255,255])
         self.grid.draw(self.surface)
-        self.display_start_menu(self.surface)
+        # self.display_start_menu(self.surface)
         pygame.display.flip()
 
     def update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+                self.gameover = True
+                return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 # [x, y] = pos//Cell_Size
@@ -35,7 +37,6 @@ class Environment:
                     if(self.grid.checkwin(x, y, self.turn)):
                         print("Player {} won".format(self.turn+1))
                         self.gameover = True
-                        self.running = False
                     print(self.grid.CheckGrid)
                     self.turn = 1 - self.turn
 
@@ -47,5 +48,4 @@ class Environment:
         self.turn = 0
         self.grid.reset()
         self.player.reset()
-        self.running = True
         self.gameover = False
