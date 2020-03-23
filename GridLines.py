@@ -1,13 +1,11 @@
 import pygame
 from params import Cell_Size,N,Size,grid_color,grid_thickness
-
 class Grid:
 
 	def __init__(self):
-
-		rows, cols = (N, N) 
+		self.empty_positions=N*N
+		rows, cols = (N, N)
 		self.CheckGrid = [[-1 for i in range(cols)] for j in range(rows)]
-
 		self.gridlines = [((Size, 0),(Size, Size))] # side bar
 
 		# vertical lines
@@ -30,6 +28,7 @@ class Grid:
 
 	def update(self, x, y, t):
 		self.CheckGrid[x][y] = t+1
+		self.empty_positions-=1
 
 	def check(self, x, y):
 		return self.CheckGrid[x][y]
@@ -75,13 +74,16 @@ class Grid:
 		return 1 + self._rightDown(a+1, b+1, t)
 
 	def checkwin(self,x,y,t):
-
 		win = []
 		win.append(self._right(x+1, y, t+1) + 1 + self._left(x-1, y, t+1))
 		win.append(self._leftdown(x-1, y+1, t+1) + 1 + self._rightUp(x+1, y-1, t+1))
 		win.append(self._rightDown(x+1, y+1, t+1) + 1 + self._leftUp(x-1, y-1, t+1))
 		win.append(self._up(x, y-1, t+1) + 1 + self._down(x,y+1, t+1))
-
-		if(win[0]>=4 or win[1]>=4 or win[2] >= 4 or win[3] >= 4):
+		if((win[0]<4 and win[1]<4 and win[2]<4 and win[3]<4) and self.empty_positions>0):
+			return 0
+		elif((win[0]<4 and win[1]<4 and win[2]<4 and win[3]<4) and self.empty_positions==0):
+			return 3
+		elif((win[0]>=4 or win[1]>=4 or win[2]>=4 or win[3]>=4) and t==0):
 			return 1
-		return 0
+		elif((win[0]>=4 or win[1]>=4 or win[2]>=4 or win[3]>=4) and t==1):
+			return 2
