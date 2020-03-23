@@ -40,12 +40,12 @@ class Grid:
 		return 1 + self._right(a+1, b, t)
 
 	def _left(self, a, b, t):
-		if(a == 0 or self.CheckGrid[a][b] != t):
+		if(a == -1 or self.CheckGrid[a][b] != t):
 			return 0
 		return 1 + self._left(a-1, b, t)
 
 	def _up(self, a, b, t):
-		if(b == 0 or self.CheckGrid[a][b] != t):
+		if(b == -1 or self.CheckGrid[a][b] != t):
 			return 0
 		return 1 + self._up(a, b-1, t)
 
@@ -55,17 +55,17 @@ class Grid:
 		return 1 + self._down(a, b+1, t)
 
 	def _leftUp(self, a, b, t):
-		if(a == 0 or b == 0 or self.CheckGrid[a][b] != t):
+		if(a == -1 or b == -1 or self.CheckGrid[a][b] != t):
 			return 0
 		return 1 + self._leftUp(a-1, b-1, t)
 
 	def _rightUp(self, a, b, t):
-		if(a == N or b == 0 or self.CheckGrid[a][b] != t):
+		if(a == N or b == -1 or self.CheckGrid[a][b] != t):
 			return 0
 		return 1 + self._rightUp(a+1, b-1, t)
 
 	def _leftdown(self, a, b, t):
-		if(a == 0 or b == N or self.CheckGrid[a][b] != t):
+		if(a == -1 or b == N or self.CheckGrid[a][b] != t):
 			return 0
 		return 1 + self._leftdown(a-1, b+1, t)
 

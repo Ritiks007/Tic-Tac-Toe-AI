@@ -16,7 +16,9 @@ class Environment:
     
     def create_game(self):
         self.surface.fill([255,255,255])
-        self.grid.draw(self.surface)        
+        self.grid.draw(self.surface)
+        # pygame.draw.        
+        pygame.display.flip()
 
     def update(self):
         for event in pygame.event.get():
