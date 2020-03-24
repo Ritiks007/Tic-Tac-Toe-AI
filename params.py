@@ -9,4 +9,6 @@ circle_color = [0,0,255]
 circle_thickness = 3
 grid_color = [0,0,0]
 grid_thickness = 3
-font = pygame.font.SysFont('comicsansms', 30)
+font = pygame.font.SysFont('freesans', 30)
+smaller_font = pygame.font.SysFont('freesans', 25)
+even_smaller_font = pygame.font.SysFont('freesans', 20)
