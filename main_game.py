@@ -11,10 +11,11 @@ while Env.running:
 	if Env.vs_human:
 		while Env.gameover == False:
 			Env.update()
+			# clock.tick(30)
 	if Env.vs_computer:
 		while Env.gameover == False:
-			Env.update()	
+			Env.update()
+			# clock.tick(30)	
 	if Env.running == True:
 		Env.reset() 
-	clock.tick(30)
 pygame.quit()
