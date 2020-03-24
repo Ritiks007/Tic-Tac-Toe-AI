@@ -53,12 +53,12 @@ class Environment:
         # elif self.gameover == True:
         #     self.display_reset()
         # else:
-        #     self.display_running_game()
+        self.display_running_game()
         self.player.draw(self.surface)
         pygame.display.flip()
 
     def reset(self):
-        self.running = False
+        self.running = True
         self.gameover = False
         self.vs_human = False
         self.vs_computer = False
@@ -72,6 +72,22 @@ class Environment:
         pygame.display.flip()
     
     # Side Pannel Functions
+    def display_running_game(self):
+        if self.turn == 1 :
+            player_name = self.player.player1_name
+        else:
+            player_name = self.player.player2_name
+        player1_name = self.player.player1_name
+        player2_name = self.player.player2_name
+        turn = font.render(player_name + "'s Turn", 1, (255,0,0))
+        self.surface.blit(turn, (Cell_Size*(N+0.5), 100))
+        player_1 = font.render(player1_name + " is ", 1, (250, 0, 0))
+        self.surface.blit(player_1, (Cell_Size*(N+0.5), 150))
+        player_2 = font.render(player2_name + " is ", 1, (250, 0, 0))
+        self.surface.blit(player_2, (Cell_Size*(N+0.5), 200))
+        restart = font.render("restart", 1, (250,0,0))
+        self.surface.blit(restart, (Cell_Size*(N + 0.5), 500))
+
     def display_start_menu(self,surface):
 
         mode1 = smaller_font.render('Vs Human',1,(0,0,0))
