@@ -45,8 +45,8 @@ class Player:
         self.players.append([])
         self.players.append([])
         self.player_cross = 0
-        self.player1_name = 'Human'
-        self.player2_name = ''
+        self.player1_name = 'Human1'
+        self.player2_name = 'Human2'
 
     def move(self,turn,x,y):
         if turn == self.player_cross:

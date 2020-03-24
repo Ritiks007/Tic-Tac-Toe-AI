@@ -22,6 +22,25 @@ class Environment:
         # self.display_start_menu(self.surface)
         pygame.display.flip()
 
+	def display_running_game(self):
+
+		if(self.turn == 1):
+			self.player_name = self.player.player1_name
+		else:
+			self.player_name = self.player.player2_name
+
+		turn = font.render(self.player_name + "'s Turn", 1, (255,0,0))
+		surface.blit(turn, (Cell_Size*(N+0.5), 100))
+
+		player_1 = font.render(player1_name + " is ", 1, (250, 0, 0))
+		surface.blit(player_1, (Cell_Size*(N+0.5), 150))
+
+		player_2 = font.render(player2_name + " is ", 1, (250, 0, 0))
+		surface.blit(player_2, (Cell_Size*(N+0.5), 200))
+
+		restart = font.render("restart", 1, (250,0,0))
+		surface.blit(restart, (Cell_Size*(N + 0.5), 500))
+
     def update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -52,8 +71,8 @@ class Environment:
         #     self.display_user_details()
         # elif self.gameover == True:
         #     self.display_reset()
-        # else:
-        #     self.display_running_game()
+        if self.user_details_received == True and self.gameover == False:
+			self.display_running_game()
         self.player.draw(self.surface)
         pygame.display.flip()
         
