@@ -1,12 +1,17 @@
 import pygame
-pygame.init()
 from Environment import Environment
 
 Env = Environment()
-Env.create_game()
 
-while Env.running:
-	while Env.gameover == False:
+while not Env.running:
+	Env.create_game()
+
+if Env.vs_human:
+	while Env.running:
+		# for event in pygame.event.get():
+		# 	if(event.type == pygame.QUIT):
+		# 		Env.running = False
 		Env.update()
-	Env.reset()
+if Env.vs_computer:
+	while 
 pygame.quit()

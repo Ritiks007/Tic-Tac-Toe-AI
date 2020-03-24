@@ -7,7 +7,9 @@ from Player import Player
 class Environment:
     def __init__(self):
         self.grid = Grid()
-        self.running = True
+        self.running = False
+        self.vs_human = True
+        self.vs_computer = False
         self.player = Player()
         self.turn = 0
         self.surface = pygame.display.set_mode((Size+200,Size))
@@ -46,8 +48,15 @@ class Environment:
 
         self.surface.fill([255,255,255])
         self.grid.draw(self.surface)
+        # if self.user_details_received == False:  
+        #     self.display_user_details()
+        # elif self.gameover == True:
+        #     self.display_reset()
+        # else:
+        #     self.display_running_game()
         self.player.draw(self.surface)
         pygame.display.flip()
+        
     def reset(self):
         self.turn = 0
         self.grid.reset()
