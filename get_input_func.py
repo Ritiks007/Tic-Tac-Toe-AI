@@ -1,56 +1,61 @@
-def ask(question):
-    '''ask(question) -> answer'''
-    current_string = ""
-    display_box(question + ": " + current_string)
-    while 1:
-        current_string += str(enterName.getCharacter)
-        # show the full string while typing
-        display_box(question + ": " + current_string)
-    return current_string # this is the answer
+import pygame as pg
+from params import COLOR_ACTIVE,COLOR_INACTIVE,even_smaller_font as font
 
-class enterName:
-    def getKeyPress(self):
-      for event in pygame.event.get():
-         if event.type == KEYDOWN:    
-             return event.key
-         else:
-             return False
+class InputBox:
 
-    def getCharacter(self):
-      # Check to see if the player has used a modifier key (Shift, Alt, Ctrl)
-      keyinput = pygame.key.get_pressed()  
+    def __init__(self, x, y, w, h, text=''):
+        self.rect = pg.Rect(x, y, w, h)
+        self.color = COLOR_INACTIVE
+        self.text = text
+        self.txt_surface = font.render(text, True, self.color)
+        self.active = False
+        self.cursor = ''
+        self.blink = 0
 
-      character = "NULL"
+    def handle_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN:
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.active = not self.active
+            else:
+                self.active = False
+            # Change the current color of the input box.
 
-      # Get all "Events" that have occurred.
-      pygame.event.pump()
-      keyPress = self.getKeyPress()
+            self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
+        if event.type == pg.KEYDOWN:
+            if self.active:
+                if event.key == pg.K_RETURN:
+                    self.active = False
+                elif event.key == pg.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+                # Re-render the text.
+                # self.txt_surface = font.render(self.text+self.cursor, True, self.color)
+        return self.text
+    def update(self):
+        # Resize the box if the text is too long.
+        width = max(200, self.txt_surface.get_width()+10)
+        self.rect.w = width
 
-      #If the user presses a key on the keyboard then get the character
-      #If the user presses the shift key while pressing another character
-      #then capitalise it
-      if keyPress >= 32 and keyPress <= 126:
-          if keyinput[K_LSHIFT]: 
-              keyPress -= 32
+    def draw(self, screen):
+        # Blit the text.
+        if self.active:
+            if self.blink >= 160 and self.blink <= 480:
+                self.cursor = '|'
+                self.blink +=1
+            elif self.blink == 640:
+                self.cursor = ''
+                self.blink = 0
+            else:
+                self.cursor = ''
+                self.blink +=1
+        else:
+            self.cursor = ''
+            self.blink = 0
+        self.txt_surface = font.render(self.text+self.cursor, True, self.color)
+        screen.blit(self.txt_surface, (self.rect.x+4, self.rect.y-1))
+        # Blit the rect.
+        pg.draw.rect(screen, self.color, self.rect, 1)
 
-          character = chr(keyPress)
-
-      return character
-
-def display_box(message):
-  "Print a message in a box in the middle of the screen"
-  left = (SCREENWIDTH / 2) - 156
-  top = (SCREENHEIGHT / 2) + 4  #16
-  pygame.draw.rect(SCREEN, DARKGREEN, (left, top, 320, 200)) # 320  240
-  SCREEN.blit(BASICFONT.render("New High Score!", True, GREEN),
-              (left + 90, top + 35)) # 55
-  SCREEN.blit(BASICFONT.render("Press return when done.", True, GREEN),
-              (left + 51, top + 160)) # 180
-  
-  pygame.draw.rect(SCREEN, BLACK, (left + 39, top + 110, 240, 20))
-  pygame.draw.rect(SCREEN, WHITE, (left + 38, top + 108, 244, 24), 1)
-  
-  if len(message) != 0:
-    SCREEN.blit(BASICFONT.render(message, True, WHITE), (left+42, top + 111))
-                
-  pygame.display.flip()

@@ -3,8 +3,8 @@ pygame.init()
 from Environment import Environment
 
 Env = Environment()
-
-while not Env.running:
+clock = pygame.time.Clock()
+while not Env.running and not Env.gameover:
 	Env.create_game()
 
 while Env.running:
@@ -16,4 +16,5 @@ while Env.running:
 			Env.update()	
 	if Env.running == True:
 		Env.reset() 
+	clock.tick(30)
 pygame.quit()

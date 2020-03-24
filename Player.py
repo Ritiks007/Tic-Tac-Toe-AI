@@ -1,6 +1,6 @@
 import pygame
 from params import Cell_Size,cross_color,cross_thickness,circle_color,circle_thickness
-
+from get_input_func import InputBox
 
 class Cross:
     def __init__(self,x,y):
@@ -45,8 +45,11 @@ class Player:
         self.players.append([])
         self.players.append([])
         self.player_cross = 0
-        self.player1_name = 'Human'
-        self.player2_name = ''
+        self.player1_name = 'Human1'
+        self.player2_name = 'Human2'
+        self.input_box1 = InputBox(680, 162, 110, 20,self.player1_name)
+        self.input_box2 = InputBox(680, 312, 110, 20,self.player2_name)
+
 
     def move(self,turn,x,y):
         if turn == self.player_cross:
@@ -66,4 +69,8 @@ class Player:
         self.players.append([])
         self.players.append([])
         self.player_cross = 0
+        self.player1_name = 'Human1'
+        self.player2_name = 'Human2'
+        self.input_box1 = InputBox(680, 162, 110, 20,self.player1_name)
+        self.input_box2 = InputBox(680, 312, 110, 20,self.player2_name)
 
