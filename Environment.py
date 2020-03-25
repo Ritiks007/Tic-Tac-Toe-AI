@@ -58,7 +58,6 @@ class Environment:
                         print(self.grid.CheckGrid)
                         self.turn = 1 - self.turn
             self.display_running_game()
-            self.player.draw(self.surface)
 
         pygame.display.flip()
 
@@ -114,6 +113,7 @@ class Environment:
                 if x>= 620 and x <= 760 and y <= 550 and y >= 450:
                     self.reset()
                     self.running = False
+        self.player.draw(self.surface)
 
     def display_start_menu(self,surface):
 
@@ -222,3 +222,4 @@ class Environment:
                 if x>= 620 and x <= 760 and y <= 550 and y >= 450:
                     self.reset()
                     self.running = False
+        self.player.draw(self.surface)
