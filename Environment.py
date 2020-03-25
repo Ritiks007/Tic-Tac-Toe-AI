@@ -8,6 +8,7 @@ class Environment:
     def __init__(self):
         self.grid = Grid()
         self.running = False
+        self.quit = False
         self.vs_human = True
         self.vs_computer = False
         self.player = Player()
@@ -32,18 +33,18 @@ class Environment:
         elif self.gameover == True:
             self.display_reset()
         else:
-            self.display_running_game()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.gameover = True
+                    self.quit = True
                     return
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     # [x, y] = pos//Cell_Size
                     x = pos[0]//Cell_Size
                     y = pos[1]//Cell_Size
-                    print('{},{}'.format(x,y))
+                    # print('{},{}'.format(x,y))
                     if(x<N and y<N and self.grid.check(x,y) == -1):
                         self.player.move(self.turn, x, y)
                         self.grid.update(x,y,self.turn) 
@@ -56,11 +57,13 @@ class Environment:
                             self.gameover = True
                         print(self.grid.CheckGrid)
                         self.turn = 1 - self.turn
-        self.player.draw(self.surface)
+            self.display_running_game()
+            self.player.draw(self.surface)
 
         pygame.display.flip()
 
     def reset(self):
+        self.quit = False
         self.running = True
         self.gameover = False
         self.vs_human = False
@@ -70,10 +73,6 @@ class Environment:
         self.result = 0
         self.grid.reset()
         self.player.reset()
-        self.surface.fill([255,255,255])
-        self.grid.draw(self.surface)
-        self.display_start_menu(self.surface)
-        pygame.display.flip()
     
     # Side Pannel Functions
 
@@ -108,13 +107,13 @@ class Environment:
         self.surface.blit(restart, (Cell_Size*(N + 0.5), 500))
 
         for event in pygame.event.get():
-            print('here')
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 x = pos[0]
                 y = pos[1]
                 if x>= 620 and x <= 760 and y <= 550 and y >= 450:
                     self.reset()
+                    self.running = False
 
     def display_start_menu(self,surface):
 
@@ -129,6 +128,7 @@ class Environment:
             if event.type == pygame.QUIT:
                 self.running = False
                 self.gameover = True
+                self.quit = True
                 return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
@@ -139,9 +139,11 @@ class Environment:
                 if x>=620 and x<=760 and y>=250 and y<=295:
                     self.vs_human = True
                     self.running = True
+                    self.gameover = False
                 elif x>=620 and x<=760 and y>=300 and y<=345:
                     self.vs_computer = True
                     self.running = True
+                    self.gameover = False
                 
     def display_user_details(self,surface):
         
@@ -168,6 +170,7 @@ class Environment:
             if event.type == pygame.QUIT:
                 self.running = False
                 self.gameover = True
+                self.quit = True
                 return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
@@ -210,6 +213,7 @@ class Environment:
             if event.type == pygame.QUIT:
                 self.running = False
                 self.gameover = True
+                self.quit = True
                 return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
@@ -217,3 +221,4 @@ class Environment:
                 y = pos[1]
                 if x>= 620 and x <= 760 and y <= 550 and y >= 450:
                     self.reset()
+                    self.running = False
