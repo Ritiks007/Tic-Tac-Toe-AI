@@ -13,11 +13,11 @@ class Environment:
         self.surface = pygame.display.set_mode((Size+200,Size))
         pygame.display.set_caption("tic tac toe")
         self.gameover = False
-    
+
     def create_game(self):
         self.surface.fill([255,255,255])
         self.grid.draw(self.surface)
-        # pygame.draw.        
+        # pygame.draw.
         pygame.display.flip()
 
     def update(self):
@@ -32,13 +32,16 @@ class Environment:
                 if(x<N and y<N and self.grid.check(x,y) == -1):
                     self.player.move(self.turn, x, y)
                     self.grid.update(x,y,self.turn)
-                    if(self.grid.checkwin(x, y, self.turn)):
+                    result=self.grid.checkwin(x,y,self.turn)
+                    if(result==1 or result==2):
                         print("Player {} won".format(self.turn+1))
                         self.gameover = True
-                        self.running = False
+                    elif(result==3):
+                        print("Draw")
+                        self.gameover=True
                     print(self.grid.CheckGrid)
                     self.turn = 1 - self.turn
-                    
+
         self.surface.fill([255,255,255])
         self.grid.draw(self.surface)
         self.player.draw(self.surface)
