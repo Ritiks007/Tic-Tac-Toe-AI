@@ -25,7 +25,7 @@ class Grid:
     def draw(self, surface):
         for line in self.gridlines:
             pygame.draw.line(surface, grid_color, line[0], line[1], grid_thickness)
-            menu = font.render('MENU', 1, (255,0,0))
+            menu = font.render('MENU', 1, (122, 24, 70))
             surface.blit(menu, (Cell_Size*(N+0.5), 20))
 
     def update(self, x, y, t):

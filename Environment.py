@@ -90,20 +90,22 @@ class Environment:
         player2_name = self.player.player2_name
 
         # display of Player's Turn
-        turn = even_smaller_font.render(player_name + "'s Turn", 1, (255,0,0))
-        self.surface.blit(turn, (Cell_Size*(N+0.3), 100))
+        if(self.turn == 1):
+            turn = even_smaller_font.render(player_name + "'s Turn", 1, (235,117,117))
+        else:
+            turn = even_smaller_font.render(player_name + "'s Turn", 1, (130,114,195))
+        self.surface.blit(turn, (Cell_Size*(N+0.3), 150))
 
         # display of Players Symbols
-        player_1 = even_smaller_font.render(player1_name + " is " + player1_symbol, 1, (250, 0, 0))
-        self.surface.blit(player_1, (Cell_Size*(N+0.2), 150))
+        player_1 = even_smaller_font.render(player1_name + " is " + player1_symbol, 1, (130,114,195))
+        self.surface.blit(player_1, (Cell_Size*(N+0.2), 250))
 
-        player_2 = even_smaller_font.render(player2_name + " is " + player2_symbol, 1, (250, 0, 0))
-        self.surface.blit(player_2, (Cell_Size*(N+0.2), 200))
+        player_2 = even_smaller_font.render(player2_name + " is " + player2_symbol, 1, (235,117,117))
+        self.surface.blit(player_2, (Cell_Size*(N+0.2), 300))
 
         # display and working of restart button
-        
-        restart = font.render("restart", 1, (250,0,0))
-        self.surface.blit(restart, (Cell_Size*(N + 0.5), 500))
+        reset = font.render("reset", 1, (122, 24, 70))
+        self.surface.blit(reset, (Cell_Size*(N + 0.5), 500))
 
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -117,12 +119,12 @@ class Environment:
 
     def display_start_menu(self,surface):
 
-        mode1 = smaller_font.render('Vs Human',1,(0,0,0))
-        mode2 = smaller_font.render('Vs AI',1,(0,0,0))
-        choose = font.render('Select Mode',1,(0,0,0))
-        surface.blit(choose,(Cell_Size*(N+0.2), 180))
-        surface.blit(mode1, (Cell_Size*(N+0.3), 260))
-        surface.blit(mode2, (Cell_Size*(N+0.3), 310))
+        mode1 = smaller_font.render('Vs Human',1,(88, 95, 193))
+        mode2 = smaller_font.render('Vs AI',1,(88, 95, 193))
+        choose = smaller_font.render('Select Mode',1,(122, 24, 70))
+        surface.blit(choose,(Cell_Size*(N+0.2)+5, 180))
+        surface.blit(mode1, (Cell_Size*(N+0.3)+10, 260))
+        surface.blit(mode2, (Cell_Size*(N+0.3)+30, 310))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -132,10 +134,8 @@ class Environment:
                 return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                # [x, y] = pos//Cell_Size
                 x = pos[0]
                 y = pos[1]
-                # print('{},{}'.format(x,y))
                 if x>=620 and x<=760 and y>=250 and y<=295:
                     self.vs_human = True
                     self.running = True
@@ -148,23 +148,23 @@ class Environment:
     def display_user_details(self,surface):
         
         input_boxes = [self.player.input_box1, self.player.input_box2]
-        details_1 = smaller_font.render('Player 1',1,(0,0,0))
-        details_2 = smaller_font.render('Player 2',1,(0,0,0))
-        name_txt = even_smaller_font.render('Name : ',1,(0,0,0))
-        confirm_txt = smaller_font.render('Play',1,(0,0,0))
-        choose_txt = even_smaller_font.render('Choose :',1,(0,0,0))
-        check_box1 = even_smaller_font.render('X',1,(0,0,0))
-        check_box2 = even_smaller_font.render('O',1,(0,0,0))
-        surface.blit(details_1,(Cell_Size*(N+0.5), 120))
-        surface.blit(name_txt,(Cell_Size*(N+0.1), 160))
-        surface.blit(choose_txt,(Cell_Size*(N+0.1), 200))
-        surface.blit(check_box1,(Cell_Size*(N+1), 200))
-        surface.blit(check_box2,(Cell_Size*(N+1.3), 200))
+        details_1 = smaller_font.render('Player 1',1,(122, 24, 70))
+        details_2 = smaller_font.render('Player 2',1,(122, 24, 70))
+        name_txt = even_smaller_font.render('Name : ',1,(122, 24, 70))
+        play_button = smaller_font.render('Play',1,(122, 24, 70))
+        choose_txt = even_smaller_font.render('Choose :',1,(122, 24, 70))
+        check_box1 = even_smaller_font.render('X',1,(130,114,195))
+        check_box2 = even_smaller_font.render('O',1,(235,117,117))
+        surface.blit(details_1,(Cell_Size*(N+0.5), 140))
+        surface.blit(name_txt,(Cell_Size*(N+0.1), 190))
+        surface.blit(choose_txt,(Cell_Size*(N+0.1), 230))
+        surface.blit(check_box1,(Cell_Size*(N+1), 230))
+        surface.blit(check_box2,(Cell_Size*(N+1.3), 230))
 
-        surface.blit(details_2,(Cell_Size*(N+0.5), 270))
-        surface.blit(name_txt,(Cell_Size*(N+0.1), 310))
+        surface.blit(details_2,(Cell_Size*(N+0.5), 300))
+        surface.blit(name_txt,(Cell_Size*(N+0.1), 340))
 
-        surface.blit(confirm_txt,(Cell_Size*(N+0.6), 380))
+        surface.blit(play_button,(Cell_Size*(N+0.6), 450))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -177,7 +177,7 @@ class Environment:
                 x = pos[0]
                 y = pos[1]
                 # print('{},{}'.format(x,y))
-                if x>=665 and x<=722 and y>=378 and y<=405:
+                if x>=665 and x<=722 and y>=450 and y<=480:
                     self.user_details_received = True
             for i,box in enumerate(input_boxes):
                 player_name_received = box.handle_event(event)
@@ -185,28 +185,24 @@ class Environment:
                     self.player.player1_name = player_name_received
                 else:
                     self.player.player2_name = player_name_received
-        
-        # print('{} , {}'.format(self.player.player1_name,self.player.player2_name))
-            
+                    
         for box in input_boxes:
             box.update()
             box.draw(self.surface)
     
     def display_reset(self):
 
-        if(self.result == 1):
-            win = even_smaller_font.render(self.player.player1_name + 'won', 1, (255,0,0))
-            self.surface.blit(win, (Cell_Size*(N+0.3), 100))
-        elif(self.result == 2):
-            win = even_smaller_font.render(self.player.player2_name + 'won', 1, (255,0,0))
-            self.surface.blit(win, (Cell_Size*(N+0.3), 100))
-        elif(self.result == 3):
-            win = even_smaller_font.render('draw', 1, (255,0,0))
-            self.surface.blit(win, (Cell_Size*(N+0.3), 100))
-        else:
+        if(self.result == 0):
             return
+        elif(self.result == 1):
+            win = smaller_font.render(self.player.player1_name + ' won', 1, (125,0,125))
+        elif(self.result == 2):
+            win = smaller_font.render(self.player.player2_name + ' won', 1, (125,0,125))
+        else:
+            win = even_smaller_font.render('draw', 1, (125,0,125))
+        self.surface.blit(win, (Cell_Size*(N+0.3), 280))
             
-        restart = font.render("restart", 1, (250,0,0))
+        restart = font.render("reset", 1, (122, 24, 70))
         self.surface.blit(restart, (Cell_Size*(N + 0.5), 500))
 
         for event in pygame.event.get():
