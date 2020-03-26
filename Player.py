@@ -34,7 +34,7 @@ class Circle:
         self.color = circle_color
         self.thickness = circle_thickness
         self.radius = Cell_Size//2
-        self.center = (self.x*Cell_Size + self.radius , self.y*Cell_Size + self.radius)
+        self.center = (self.x*Cell_Size + self.radius, self.y*Cell_Size + self.radius)
         
     def draw(self,surface):
         pygame.draw.circle(surface, self.color, self.center, self.radius, self.thickness)
