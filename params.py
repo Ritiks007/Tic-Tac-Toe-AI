@@ -1,4 +1,7 @@
 import pygame
+# Game Parameters
+# Default game mode : 3*3 to 4*4
+# Default winning condition : 3 consecutive to win
 Size = 600
 N = 5
 Game_Window = [Size + 150 ,Size]
