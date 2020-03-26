@@ -52,21 +52,19 @@ class Environment:
     # Side Pannel Functions
 
     def display_running_game(self):
-        
+        if self.turn == 0 :
+            player_name = self.player.player1_name
+        else:
+            player_name = self.player.player2_name
         if self.player.player_cross == 0:
             player1_symbol = 'Cross'
             player2_symbol = 'Circle'
         else:
             player1_symbol = 'Circle'
             player2_symbol = 'Cross'
-            
         player1_name = self.player.player1_name
         player2_name = self.player.player2_name
 
-        if self.turn == 0 :
-            player_name = self.player.player1_name
-        else:
-            player_name = self.player.player2_name
         # display of Player's Turn
         if(self.turn == 1):
             turn = smaller_font.render(player_name + "'s Turn", 1, (235,117,117))
