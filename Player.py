@@ -47,8 +47,8 @@ class Player:
         self.player_cross = 0
         self.player1_name = 'Human1'
         self.player2_name = 'Human2'
-        self.input_box1 = InputBox(680, 162, 110, 20,self.player1_name)
-        self.input_box2 = InputBox(680, 312, 110, 20,self.player2_name)
+        self.input_box1 = InputBox(670, 188, 110, 20,self.player1_name)
+        self.input_box2 = InputBox(670, 338, 110, 20,self.player2_name)
 
 
     def move(self,turn,x,y):
@@ -71,6 +71,6 @@ class Player:
         self.player_cross = 0
         self.player1_name = 'Human1'
         self.player2_name = 'Human2'
-        self.input_box1 = InputBox(680, 162, 110, 20,self.player1_name)
-        self.input_box2 = InputBox(680, 312, 110, 20,self.player2_name)
+        self.input_box1 = InputBox(670, 188, 110, 20,self.player1_name)
+        self.input_box2 = InputBox(670, 338, 110, 20,self.player2_name)
 

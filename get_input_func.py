@@ -55,7 +55,7 @@ class InputBox:
             self.cursor = ''
             self.blink = 0
         self.txt_surface = font.render(self.text+self.cursor, True, self.color)
-        screen.blit(self.txt_surface, (self.rect.x+4, self.rect.y-1))
+        screen.blit(self.txt_surface, (self.rect.x+4, self.rect.y+3))
         # Blit the rect.
         pg.draw.rect(screen, self.color, self.rect, 1)
 
