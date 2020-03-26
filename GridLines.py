@@ -1,5 +1,5 @@
 import pygame
-from params import Cell_Size,N,Size,overall_color,grid_thickness,font, overall_color
+from params import Cell_Size,N,win_condition,Size,overall_color,grid_thickness,font, overall_color
 
 class Grid:
 
@@ -29,7 +29,7 @@ class Grid:
         for line in self.gridlines:
             pygame.draw.line(surface, overall_color, line[0], line[1], grid_thickness)
             menu = font.render('MENU', 1, overall_color)
-            surface.blit(menu, (Cell_Size*(N+0.6), 20))
+            surface.blit(menu, (672, 20))
 
     # updating move in grid
     def update(self, x, y, t):
@@ -91,13 +91,13 @@ class Grid:
         win.append(self._up(x, y-1, t+1) + 1 + self._down(x,y+1, t+1)) # check in vertical direction
 
         # draw is 3, win of player1 is 1, win of player2 is 2, ongoing game is 0
-        if((win[0]<4 and win[1]<4 and win[2]<4 and win[3]<4) and self.empty_positions>0):
+        if((win[0]<win_condition and win[1]<win_condition and win[2]<win_condition and win[3]<win_condition) and self.empty_positions>0):
             return 0
-        elif((win[0]<4 and win[1]<4 and win[2]<4 and win[3]<4) and self.empty_positions==0):
+        elif((win[0]<win_condition and win[1]<win_condition and win[2]<win_condition and win[3]<win_condition) and self.empty_positions==0):
             return 3
-        elif((win[0]>=4 or win[1]>=4 or win[2]>=4 or win[3]>=4) and t==0):
+        elif((win[0]>=win_condition or win[1]>=win_condition or win[2]>=win_condition or win[3]>=win_condition) and t==0):
             return 1
-        elif((win[0]>=4 or win[1]>=4 or win[2]>=4 or win[3]>=4) and t==1):
+        elif((win[0]>=win_condition or win[1]>=win_condition or win[2]>=win_condition or win[3]>=win_condition) and t==1):
             return 2
 
     # New game changes

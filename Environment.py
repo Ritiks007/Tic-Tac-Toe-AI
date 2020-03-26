@@ -78,18 +78,18 @@ class Environment:
             turn = smaller_font.render(player2_name + "'s Turn", 1, player2_color)
         else:
             turn = smaller_font.render(player1_name + "'s Turn", 1, player1_color)
-        self.surface.blit(turn, (Cell_Size*(N+0.4), 150))
+        self.surface.blit(turn, (648, 150))
 
         # display of Players Symbols
         player_1 = smaller_font.render(player1_name + " is " + player1_symbol, 1, player1_color)
-        self.surface.blit(player_1, (Cell_Size*(N+0.3), 250))
+        self.surface.blit(player_1, (636, 250))
 
         player_2 = smaller_font.render(player2_name + " is " + player2_symbol, 1, player2_color)
-        self.surface.blit(player_2, (Cell_Size*(N+0.3), 300))
+        self.surface.blit(player_2, (636, 300))
 
         # working of game and display and working of reset button 
         reset = font.render("Reset", 1, overall_color)
-        self.surface.blit(reset, (Cell_Size*(N + 0.6), 500))
+        self.surface.blit(reset, (672, 500))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -122,13 +122,13 @@ class Environment:
         # display of mode selection 
 
         choose = font.render('Select Mode',1,overall_color)
-        surface.blit(choose,(Cell_Size*(N+0.3)+5, 180))
+        surface.blit(choose,(641, 180))
 
         mode1 = smaller_font.render('Vs Human',1,(88, 95, 193))
-        surface.blit(mode1, (Cell_Size*(N+0.4)+10, 260))
+        surface.blit(mode1, (658, 260))
 
         mode2 = smaller_font.render('Vs AI',1,(88, 95, 193))
-        surface.blit(mode2, (Cell_Size*(N+0.4)+30, 310))
+        surface.blit(mode2, (678, 310))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -159,40 +159,40 @@ class Environment:
 
         # display of P1 tag
         details_1 = smaller_font.render('Player 1',1,overall_color)
-        surface.blit(details_1,(Cell_Size*(N+0.6), 140))
+        surface.blit(details_1,(672, 140))
 
         # display of name tag for P1
         name_txt = even_smaller_font.render('Name : ',1,overall_color)
-        surface.blit(name_txt,(Cell_Size*(N+0.1), 190))
+        surface.blit(name_txt,(612, 190))
 
         # display of choose symbol tag for P1 
         choose_txt = even_smaller_font.render('Choose :',1,overall_color)
-        surface.blit(choose_txt,(Cell_Size*(N+0.1), 230))
+        surface.blit(choose_txt,(612, 230))
 
         # display of cross symbol
         check_box1 = smaller_font.render('X',1,cross_color)
-        surface.blit(check_box1,(Cell_Size*(N+1), 230))
+        surface.blit(check_box1,(696, 230))
 
         # display of circle symbol
         check_box2 = smaller_font.render('O',1,circle_color)
-        surface.blit(check_box2,(Cell_Size*(N+1.3), 230))
+        surface.blit(check_box2,(756, 230))
 
         # display of selected symbol by player1
         tick = even_smaller_font.render('<--',1,overall_color)
         if self.player.player_cross == 0:
-            surface.blit(tick,(Cell_Size*(N+1.1), 230))
+            surface.blit(tick,(706, 230))
         else:
-            surface.blit(tick,(Cell_Size*(N+1.44), 230))
+            surface.blit(tick,(771, 230))
 
         # display of P2 tag 
         if self.vs_human:
             details_2 = smaller_font.render('Player 2',1,overall_color)
-            surface.blit(details_2,(Cell_Size*(N+0.6), 300))
-            surface.blit(name_txt,(Cell_Size*(N+0.1), 340))
+            surface.blit(details_2,(672, 300))
+            surface.blit(name_txt,(612, 340))
 
         # display of play button
         play_button = smaller_font.render('Play',1,overall_color)
-        surface.blit(play_button,(Cell_Size*(N+0.7), 450))        
+        surface.blit(play_button,(684, 450))        
 
 
         for event in pygame.event.get():
@@ -205,10 +205,10 @@ class Environment:
                 pos = pygame.mouse.get_pos()
                 x = pos[0]
                 y = pos[1]
-                print('{},{}'.format(x,y))
-                if x>=720 and x<=730 and y>=227 and y<=245:
+                print(x,y)
+                if x>=696 and x<=730 and y>=227 and y<=245:
                     self.player.player_cross = 0
-                elif x>=755 and x<=770 and y>=227 and y<=245:
+                elif x>=731 and x<=770 and y>=227 and y<=245:
                     self.player.player_cross = 1
                 if x>=665 and x<=722 and y>=450 and y<=480:
                     self.user_details_received = True
@@ -235,11 +235,11 @@ class Environment:
         else:
             win = smaller_font.render('Draw :(', 1, (125,0,125))
 
-        self.surface.blit(win, (Cell_Size*(N+0.4), 280))
+        self.surface.blit(win, (648, 280))
         
         # display of reset
         reset = font.render("Reset", 1, overall_color)
-        self.surface.blit(reset, (Cell_Size*(N + 0.6), 500))
+        self.surface.blit(reset, (672, 500))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
