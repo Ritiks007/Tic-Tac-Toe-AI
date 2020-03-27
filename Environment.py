@@ -6,6 +6,7 @@ import GridLines
 from params import Size,Cell_Size,N, font, smaller_font, even_smaller_font, cross_color, circle_color, overall_color, background
 from GridLines import Grid 
 from Players import Player
+from model_train import AI,get_hash
 
 class Environment:
 
@@ -15,6 +16,10 @@ class Environment:
         self.quit = False
         self.vs_human = False
         self.vs_computer = False
+        self.learning = False
+        self.turn_computer = 1
+        self.ai = AI(0,2)
+        self.ai.load_policy()
         self.player = Player()
         self.turn = 0
         self.user_details_received = False
@@ -34,6 +39,16 @@ class Environment:
         if self.user_details_received == False:  
             self.display_user_details(self.surface)
         elif self.gameover == True:
+            if self.learning:
+                if self.result == self.turn_computer + 1:
+                    self.ai.feedReward(1)
+                elif self.result == 3:
+                    self.ai.feedReward(0.5)
+                elif self.result == 2 - self.turn_computer:
+                    self.ai.feedReward(-1)
+                self.ai.reset()
+                self.ai.save_policy(N)
+                self.learning = False
             self.display_reset()
         else:
             self.display_running_game()
@@ -46,9 +61,13 @@ class Environment:
         self.gameover = False
         self.vs_human = False
         self.vs_computer = False
+        self.learning = False
+        self.turn_computer = 1
         self.user_details_received = False
         self.turn = 0
         self.result = 0
+        self.ai = AI(0,2)
+        self.ai.load_policy()
         self.grid.reset()
         self.player.reset()
     
@@ -99,6 +118,18 @@ class Environment:
                 self.gameover = True
                 self.quit = True
                 return
+            if self.vs_computer and self.turn == self.turn_computer:
+                (x,y) = self.ai.choose_action(self.grid.CheckGrid)
+                self.player.move(self.turn,x,y)
+                self.grid.update(x,y,self.turn)
+                if self.learning: 
+                    self.ai.add_State(get_hash(self.grid.CheckGrid))
+                self.result = self.grid.checkwin(x, y, self.turn) 
+                if(self.result==1 or self.result==2):
+                    self.gameover = True
+                elif(result==3):
+                    self.gameover = True
+                self.turn = 1 - self.turn
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 x = pos[0]//Cell_Size
@@ -205,7 +236,9 @@ class Environment:
             details_2 = smaller_font.render('Player 2',1,overall_color)
             surface.blit(details_2,(672, 300))
             surface.blit(name_txt,(612, 340))
-
+        else:
+            pick_turn = smaller_font.render(2-self.turn_computer,1,overall_color)
+            surface.blit(pick_turn,(Size+(self.surface.get_width()-Size)//2 - pick_turn.get_width()//2,300))
         # display of play button
         play_button = smaller_font.render('Play',1,overall_color)
         surface.blit(play_button,(684, 450))        
@@ -227,6 +260,15 @@ class Environment:
                     self.player.player_cross = 1
                 if x>=665 and x<=722 and y>=450 and y<=480:
                     self.user_details_received = True
+                if self.vs_computer:
+                    # if x>=731 and x<=770 and y>=227 and y<=245:
+                    #     self.turn_computer = 1-self.turn_computer
+                    self.ai = AI(0.2,self.turn_computer+1)
+                    self.ai.load_policy(N)
+                    if N == 3:
+                        self.learning = False
+                    else:
+                        self.learning = True                    
             for i,box in enumerate(input_boxes):
                 player_name_received = box.handle_event(event)
                 if i :

@@ -2,7 +2,6 @@ import pygame
 import matplotlib.pyplot as plt
 import numpy as np
 import pickle
-from params import N
 if __name__ =='__main__':
     from Environment import Environment
     Env = Environment()
@@ -19,8 +18,8 @@ class AI:
 
     def choose_action(self,board):
         positions = []
-        for i in range(N):
-            for j in range(N):
+        for i in range(len(board)):
+            for j in range(len(board)):
                 if board[i][j] == -1:
                     positions.append((i,j))
         if np.random.uniform(0,1) <= self.exp_rate:
@@ -52,13 +51,13 @@ class AI:
     def reset(self):
         self.states = []
 
-    def save_policy(self):
-        f = open('q_table_player'+str(self.number),'wb')
+    def save_policy(self,mode=3):
+        f = open('q_table_'+str(mode)+'_player'+str(self.number),'wb')
         pickle.dump(self.states_values,f)
         f.close()
 
-    def load_policy(self):
-        f = open('q_table_player'+str(self.number),'rb')
+    def load_policy(self,mode=3):
+        f = open('q_table_'+str(mode)+'_player'+str(self.number),'rb')
         self.states_values = pickle.load(f)
         f.close()
 
