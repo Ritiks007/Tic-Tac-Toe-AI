@@ -74,7 +74,7 @@ def giveReward(p1,p2,winner):
         p1.feedReward(1)
         p2.feedReward(0)
     elif winner == 2:
-    	p1.feedReward(0)
+        p1.feedReward(0)
         p2.feedReward(1)
     else:
         p1.feedReward(0.1)
@@ -123,8 +123,8 @@ def train(rounds=10000):
         p1.reset()
         p2.reset()
         Env.reset()
-    p1.save_policy()
-    p2.save_policy()
+    p1.save_policy(3)
+    p2.save_policy(3)
     episodes = np.arange(0,rounds//1000)
     plt.plot(episodes,win_1,'r^',episodes,win_2,'bs',episodes,draw,'g--')
     plt.show()

@@ -18,7 +18,7 @@ class Environment:
         self.vs_computer = False
         self.learning = False
         self.turn_computer = 1
-        self.ai = AI(0,2)
+        self.ai = AI(0.2,2)
         self.ai.load_policy()
         self.player = Player()
         self.turn = 0
@@ -205,8 +205,12 @@ class Environment:
             input_boxes = [self.player.input_box1]
 
         # display of P1 tag
-        details_1 = smaller_font.render('Player 1',1,overall_color)
-        surface.blit(details_1,(672, 140))
+        if self.vs_human:
+            details_1 = smaller_font.render('Player 1',1,overall_color)
+            surface.blit(details_1,(672, 140))
+        else:
+            details_1 = smaller_font.render(' Player ',1,overall_color)
+            surface.blit(details_1,(672, 140))
 
         # display of name tag for P1
         name_txt = even_smaller_font.render('Name : ',1,overall_color)
@@ -237,7 +241,7 @@ class Environment:
             surface.blit(details_2,(672, 300))
             surface.blit(name_txt,(612, 340))
         else:
-            pick_turn = smaller_font.render(2-self.turn_computer,1,overall_color)
+            pick_turn = smaller_font.render(str(2-self.turn_computer),1,overall_color)
             surface.blit(pick_turn,(Size+(self.surface.get_width()-Size)//2 - pick_turn.get_width()//2,300))
         # display of play button
         play_button = smaller_font.render('Play',1,overall_color)
@@ -261,8 +265,8 @@ class Environment:
                 if x>=665 and x<=722 and y>=450 and y<=480:
                     self.user_details_received = True
                 if self.vs_computer:
-                    # if x>=731 and x<=770 and y>=227 and y<=245:
-                    #     self.turn_computer = 1-self.turn_computer
+                    if x>=695 and x<=705 and y>=300 and y<=310:
+                        self.turn_computer = 1-self.turn_computer
                     self.ai = AI(0.2,self.turn_computer+1)
                     self.ai.load_policy(N)
                     if N == 3:
