@@ -23,6 +23,6 @@ COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
 
 # Fonts
-font = pygame.font.SysFont('comicsansms', 32)
-smaller_font = pygame.font.SysFont('comicsansms', 25)
-even_smaller_font = pygame.font.SysFont('comicsansms', 20)
+font = pygame.font.SysFont(None, 32)
+smaller_font = pygame.font.SysFont(None, 25)
+even_smaller_font = pygame.font.SysFont(None, 20)
