@@ -4,7 +4,6 @@ from params import Cell_Size,N,win_condition,Size,overall_color,grid_thickness,f
 class Grid:
 
     def __init__(self):
-        
         self.empty_positions=N*N
         rows, cols = (N, N) 
         self.CheckGrid = [[-1 for i in range(cols)] for j in range(rows)] # Grid to check empty positions and winner
@@ -23,7 +22,7 @@ class Grid:
             Tup = ((0,i*Cell_Size), (Size, i*Cell_Size))
             self.gridlines.append(Tup)
             i -= 1
-
+        
     # drawing grid
     def draw(self, surface):
         for line in self.gridlines:

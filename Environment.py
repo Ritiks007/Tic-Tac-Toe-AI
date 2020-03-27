@@ -1,8 +1,11 @@
 #TIC TAC TOE Environment
 import pygame
-from params import Size, Cell_Size, N, font, smaller_font, even_smaller_font, cross_color, circle_color, overall_color, background
+import params
+import Players
+import GridLines
+from params import Size,Cell_Size,N, font, smaller_font, even_smaller_font, cross_color, circle_color, overall_color, background
 from GridLines import Grid 
-from Player import Player
+from Players import Player
 
 class Environment:
 
@@ -22,20 +25,19 @@ class Environment:
     
     def create_game(self):
         self.surface.fill(background)
-        self.grid.draw(self.surface)
         self.display_start_menu(self.surface)
+        self.grid.draw(self.surface)
         pygame.display.flip()
 
     def update(self):
         self.surface.fill(background)
-        self.grid.draw(self.surface)
         if self.user_details_received == False:  
             self.display_user_details(self.surface)
         elif self.gameover == True:
             self.display_reset()
         else:
             self.display_running_game()
-
+        self.grid.draw(self.surface)
         pygame.display.flip()
 
     def reset(self):
@@ -78,14 +80,14 @@ class Environment:
             turn = smaller_font.render(player2_name + "'s Turn", 1, player2_color)
         else:
             turn = smaller_font.render(player1_name + "'s Turn", 1, player1_color)
-        self.surface.blit(turn, (648, 150))
+        self.surface.blit(turn, (Size+(self.surface.get_width()-Size)//2 - turn.get_width()//2, 150))
 
         # display of Players Symbols
         player_1 = smaller_font.render(player1_name + " is " + player1_symbol, 1, player1_color)
-        self.surface.blit(player_1, (636, 250))
+        self.surface.blit(player_1, (Size+(self.surface.get_width()-Size)//2 - player_1.get_width()//2, 250))
 
         player_2 = smaller_font.render(player2_name + " is " + player2_symbol, 1, player2_color)
-        self.surface.blit(player_2, (636, 300))
+        self.surface.blit(player_2, (Size+(self.surface.get_width()-Size)//2 - player_2.get_width()//2, 300))
 
         # working of game and display and working of reset button 
         reset = font.render("Reset", 1, overall_color)
@@ -120,7 +122,6 @@ class Environment:
     def display_start_menu(self,surface):
 
         # display of mode selection 
-
         choose = font.render('Select Mode',1,overall_color)
         surface.blit(choose,(641, 180))
 
@@ -128,20 +129,36 @@ class Environment:
         surface.blit(mode1, (658, 260))
 
         mode2 = smaller_font.render('Vs AI',1,(88, 95, 193))
-        surface.blit(mode2, (678, 310))
+        surface.blit(mode2, (678, 300))
 
+        matrix = smaller_font.render('Game 3x3',1,(88, 95, 193))
+        surface.blit(matrix, (658, 350))
+
+        matrix = smaller_font.render('Game 4x4',1,(88, 95, 193))
+        surface.blit(matrix, (658, 390))
+
+        matrix = smaller_font.render('Game 5x5',1,(88, 95, 193))
+        surface.blit(matrix, (658, 430))
+    
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
                 self.gameover = True
                 self.quit = True
                 return
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 x = pos[0]
                 y = pos[1]
-
-                if x>=650 and x<=745 and y>=253 and y<=280: # selecting vs human
+                
+                if x>=670 and x<=745 and y>=345 and y<=370: # selecting matrix 3x3
+                    self.ChangeGame(3)
+                elif x>=670 and x<=745 and y>=385 and y<=410: # selecting matrix 4x4
+                    self.ChangeGame(4)
+                elif x>=670 and x<=745 and y>=425 and y<=450: # selecting matrix 5x5
+                    self.ChangeGame(5)
+                elif x>=650 and x<=745 and y>=253 and y<=280: # selecting vs human
                     self.vs_human = True
                     self.running = True
                     self.gameover = False
@@ -149,9 +166,8 @@ class Environment:
                     self.vs_computer = True
                     self.running = True
                     self.gameover = False
-                
+                                
     def display_user_details(self,surface):
-
         if self.vs_human:
             input_boxes = [self.player.input_box1, self.player.input_box2]
         else:
@@ -205,7 +221,6 @@ class Environment:
                 pos = pygame.mouse.get_pos()
                 x = pos[0]
                 y = pos[1]
-                print(x,y)
                 if x>=696 and x<=730 and y>=227 and y<=245:
                     self.player.player_cross = 0
                 elif x>=731 and x<=770 and y>=227 and y<=245:
@@ -255,3 +270,19 @@ class Environment:
                     self.reset()
                     self.running = False
         self.player.draw(self.surface)
+    
+    def ChangeGame(self,n):
+        global N
+        global Cell_Size
+        N = n
+        Cell_Size = Size//n
+        params.N = n
+        params.Cell_Size = params.Size//params.N
+        GridLines.N = n
+        if n!=3:
+            GridLines.win_condition = 4
+        else:
+            GridLines.win_condition = 3
+        GridLines.Cell_Size = GridLines.Size//GridLines.N
+        Players.Cell_Size = Size//N
+        self.grid = Grid()
