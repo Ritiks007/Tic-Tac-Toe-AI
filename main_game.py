@@ -1,13 +1,17 @@
 import pygame
+pygame.init()
 from Environment import Environment
 
 Env = Environment()
-Env.create_game()
+clock = pygame.time.Clock()
 
-while Env.running:
-	# for event in pygame.event.get():
-	# 	if(event.type == pygame.QUIT):
-	# 		Env.running = False
-    Env.update()
-
+while Env.quit == False:
+	if Env.running == False:
+		Env.create_game()
+	elif Env.vs_human:
+		Env.update()
+		# clock.tick(30)
+	elif Env.vs_computer:
+		Env.update()
+		# clock.tick(30)	
 pygame.quit()
