@@ -250,11 +250,11 @@ class Environment:
         else:
             win = smaller_font.render('Draw :(', 1, (125,0,125))
 
-        self.surface.blit(win, (648, 280))
+        self.surface.blit(win, (Size+(self.surface.get_width()-Size)//2 - win.get_width()//2, 280))
         
         # display of reset
         reset = font.render("Reset", 1, overall_color)
-        self.surface.blit(reset, (672, 500))
+        self.surface.blit(reset, (Size+(self.surface.get_width()-Size)//2 - reset.get_width()//2, 500))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
