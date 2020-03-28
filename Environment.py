@@ -127,7 +127,7 @@ class Environment:
                 self.result = self.grid.checkwin(x, y, self.turn) 
                 if(self.result==1 or self.result==2):
                     self.gameover = True
-                elif(result==3):
+                elif(self.result==3):
                     self.gameover = True
                 self.turn = 1 - self.turn
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -267,19 +267,31 @@ class Environment:
                 if self.vs_computer:
                     if x>=695 and x<=705 and y>=300 and y<=310:
                         self.turn_computer = 1-self.turn_computer
+                    if self.turn_computer == 0:
+                        self.player.player1_name = 'Computer'
+                    else:
+                        self.player.player2_name = 'Computer'   
                     self.ai = AI(0.2,self.turn_computer+1)
                     self.ai.load_policy(N)
                     if N == 3:
                         self.learning = False
                     else:
-                        self.learning = True                    
-            for i,box in enumerate(input_boxes):
-                player_name_received = box.handle_event(event)
-                if i :
-                    self.player.player2_name = player_name_received
-                else:
-                    self.player.player1_name = player_name_received
-                    
+                        self.learning = True
+            if self.vs_human:                    
+                for i,box in enumerate(input_boxes):
+                    player_name_received = box.handle_event(event)
+                    if i == 1:
+                        self.player.player2_name = player_name_received
+                    else:
+                        self.player.player1_name = player_name_received
+            else:
+                for i,box in enumerate(input_boxes):
+                    player_name_received = box.handle_event(event)
+                    if self.turn_computer == 0:
+                        self.player.player2_name = player_name_received
+                    else:
+                        self.player.player1_name = player_name_received
+
         for box in input_boxes:
             box.update()
             box.draw(self.surface)

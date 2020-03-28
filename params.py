@@ -1,4 +1,5 @@
 import pygame
+pygame.init()
 # Game Parameters
 # Default game mode : 3*3  Change to 4 or 5 to change mode
 N = 3

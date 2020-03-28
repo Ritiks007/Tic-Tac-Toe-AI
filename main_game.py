@@ -1,5 +1,4 @@
 import pygame
-pygame.init()
 from Environment import Environment
 
 Env = Environment()

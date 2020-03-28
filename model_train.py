@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 if __name__ =='__main__':
-    from Environment import Environment
-    Env = Environment()
+    from Gridlines import Grid
+    grid = Grid()
 
 class AI:
     
@@ -15,6 +15,7 @@ class AI:
         self.decay_gamma = 0.9
         self.states_values = {}
         self.number = number
+        # self.load_policy(mode)
 
     def choose_action(self,board):
         positions = []
@@ -65,9 +66,9 @@ def get_hash(board):
     ans = sum(board,[])
     return ','.join(map(str,ans))
 
-def update_state(action):
+def update_state(action,turn):
     (x,y) = action
-    Env.grid.update(x,y,Env.turn)
+    grid.update(x,y,turn)
 
 def giveReward(p1,p2,winner):
     if winner == 1:
@@ -80,7 +81,7 @@ def giveReward(p1,p2,winner):
         p1.feedReward(0.1)
         p2.feedReward(0.5)
 
-def train(rounds=10000):
+def train(mode,rounds=10000):
     p1 = AI(0.2,1)
     p2 = AI(0.2,2)
     win_1 = np.zeros(rounds//1000)
@@ -99,37 +100,40 @@ def train(rounds=10000):
             wins_2 = 0
             draws = 0
         winner = 0
+        turn = 0
         while winner == 0:
-            if Env.turn == 0:
-                action = p1.choose_action(Env.grid.CheckGrid)
-                update_state(action)
-                p1.add_State(get_hash(Env.grid.CheckGrid))
+            if turn == 0:
+                action = p1.choose_action(grid.CheckGrid)
+                update_state(action,turn)
+                p1.add_State(get_hash(grid.CheckGrid))
 
             else:
-                action = p2.choose_action(Env.grid.CheckGrid)
-                update_state(action)
-                p2.add_State(get_hash(Env.grid.CheckGrid))
+                action = p2.choose_action(grid.CheckGrid)
+                update_state(action,turn)
+                p2.add_State(get_hash(grid.CheckGrid))
             (x,y) = action
 
-            winner = Env.grid.checkwin(x,y,Env.turn)
+            winner = grid.checkwin(x,y,turn)
             if winner == 1:
                 wins_1 +=1
             elif winner == 2:
                 wins_2 +=1
             elif winner == 3:
                 draws +=1
-            Env.turn = 1 - Env.turn
+            turn = 1 - turn
         giveReward(p1,p2,winner)
         p1.reset()
         p2.reset()
-        Env.reset()
-    p1.save_policy(3)
-    p2.save_policy(3)
+        grid.reset()
+    p1.save_policy(mode)
+    p2.save_policy(mode)
     episodes = np.arange(0,rounds//1000)
     plt.plot(episodes,win_1,'r^',episodes,win_2,'bs',episodes,draw,'g--')
     plt.show()
 
-
+# To train a new model, change the mode 
+# and also change N and win_condition in params.py else there will be errors
 if __name__ =='__main__':
     episodes = 50
-    train(episodes*1000)
+    mode = 3
+    train(mode,episodes*1000)
